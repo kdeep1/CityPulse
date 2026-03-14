@@ -6,5 +6,5 @@ import { roleMiddleware } from '../middlewares/role.middleware';
  
 const router = Router();
 router.get("/users",authMiddleware,getUsers);
-router.post("/users",authMiddleware, roleMiddleware(["admin"]),creatUserController);
+router.post("/users",creatUserController);
 export default router;

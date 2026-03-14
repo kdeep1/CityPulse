@@ -16,9 +16,9 @@ export const getUsers = async (req: Request, res: Response) => {
 export const creatUserController = async (req: Request, res: Response) => {
     try {
         const validatedData = createUserSchema.parse(req.body); 
-        const { username, email, password, firstName, lastName } = validatedData;
+        const { username, email, password, firstName, lastName,role } = validatedData;
         const hashedpassword = await hashpassword(password);
-        const user = await createUser({ username, email, password:hashedpassword, firstName, lastName });
+        const user = await createUser({ username, email, password:hashedpassword, firstName, lastName ,role});
         res.json(user);
     } catch (error) {
         console.error("Error creating user:", error);

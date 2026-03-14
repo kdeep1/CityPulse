@@ -7,6 +7,7 @@ import {
   deleteEventService
 } from "../services/event.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
+import { log } from "node:console";
 
 
 export const createEventController = async (req: AuthRequest, res: Response) => {
@@ -20,9 +21,10 @@ export const createEventController = async (req: AuthRequest, res: Response) => 
     res.status(201).json(event);
 
   } catch (error) {
-
+   console.error("Error creating event:", error);
     res.status(500).json({
       message: "Failed to create event"
+
     });
 
   }
