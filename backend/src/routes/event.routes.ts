@@ -21,7 +21,7 @@ router.get("/events/:id", getEventByIdController);
 router.post(
   "/events",
   authMiddleware,
-  roleMiddleware(["ORGANIZER"]),
+  roleMiddleware(["ORGANIZER","ADMIN"]),
   createEventController
 );
 
@@ -29,7 +29,7 @@ router.post(
 router.patch(
   "/events/:id",
   authMiddleware,
-  roleMiddleware(["ORGANIZER"]),
+  roleMiddleware(["ORGANIZER","ADMIN"]),
   updateEventController
 );
 
@@ -37,7 +37,7 @@ router.patch(
 router.delete(
   "/events/:id",
   authMiddleware,
-  roleMiddleware(["ADMIN"]),
+  roleMiddleware(["ADMIN","ORGANIZER"]),
   deleteEventController
 );
 

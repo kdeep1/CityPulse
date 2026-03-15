@@ -18,21 +18,21 @@ router.get("/venues/:id", getVenueByIdController);
 router.post(
   "/venues",
   authMiddleware,
-  roleMiddleware(["ADMIN"]),
+  roleMiddleware(["ADMIN","ORGANIZER"]),
   createVenueController
 );
 
 router.patch(
   "/venues/:id",
   authMiddleware,
-  roleMiddleware(["ADMIN"]),
+  roleMiddleware(["ADMIN","ORGANIZER"]),
   updateVenueController
 );
 
 router.delete(
   "/venues/:id",
   authMiddleware,
-  roleMiddleware(["ADMIN"]),
+  roleMiddleware(["ADMIN","ORGANIZER"]),
   deleteVenueController
 );
 
