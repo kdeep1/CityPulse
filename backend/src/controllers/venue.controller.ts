@@ -6,12 +6,15 @@ import {
   updateVenueService,
   deleteVenueService
 } from "../services/venue.service";
+import { log } from "node:console";
 
 export const createVenueController = async (req: Request, res: Response) => {
   try {
     const venue = await createVenueService(req.body);
     res.status(201).json(venue);
+
   } catch (error) {
+    console.error("Error creating venue:", error);
     res.status(500).json({ message: "Failed to create venue" });
   }
 };
