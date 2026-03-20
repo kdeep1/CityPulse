@@ -1,4 +1,7 @@
+import express from "express";
 import { scanTicketController } from "../controllers/ticket.controller";
-import router from "./seat.routes";
 
-router.post("/tickets/scan", scanTicketController);
+const router = express.Router();
+
+router.post("/scan", scanTicketController);
+export default router;

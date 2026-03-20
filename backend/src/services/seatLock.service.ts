@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma";
+import { expireBookingsService } from "./booking.service";
 
 export const lockSeats = async (
   eventId: number,
@@ -57,7 +58,7 @@ export const lockSeats = async (
         throw new Error("Seat already locked by another user");
       }
     }
-
+     await expireBookingsService();
     // 🔒 Step 4: Lock seats
     await tx.eventSeat.updateMany({
       where: {

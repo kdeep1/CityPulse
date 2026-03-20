@@ -36,6 +36,7 @@ export const createBooking = async (
     const totalAmount = seats.length * 100; // later dynamic pricing
 
     //  Step 4: Create booking
+    await expireBookingsService();
     const booking = await tx.booking.create({
       data: {
         userId,
@@ -82,6 +83,7 @@ const order = await razorpayInstance.orders.create({
     receipt: bookingId
   });
   // create payment record
+  await expireBookingsService();
   const payment = await prisma.payment.create({
     data:{
       bookingId: booking.id,
@@ -94,6 +96,7 @@ const order = await razorpayInstance.orders.create({
   return payment;
  }
  // logic for payment confirmation
+ 
  export const confirmPaymentService = async(
   bookingId: string,
   paymentId: string,
@@ -101,6 +104,7 @@ const order = await razorpayInstance.orders.create({
   signature: string
 )=>{
     // Verify Razorpay signature
+    await expireBookingsService();
     const isSignatureValid = verifyRazorpaySignature(bookingId, paymentId, signature);
     if (!isSignatureValid) {
       throw new Error("Invalid payment signature");
@@ -172,7 +176,7 @@ for (const seat of booking.eventSeats) {
     userId: booking.userId,
     eventId: booking.eventId,
     ticketCode,
-    qrCodeData: qrCodeImage // 🔥 now actual image
+    qrCodeData: qrCodeImage //now actual image
   });
 }
 
@@ -180,4 +184,54 @@ await tx.ticket.createMany({
   data: ticketsData
 });
   });
+};
+export const expireBookingsService = async () => {
+
+  const now = new Date();
+
+  //Step 1: Find expired bookings
+  const expiredBookings = await prisma.booking.findMany({
+    where: {
+      status: "PENDING_PAYMENT",
+      expiresAt: {
+        lt: now
+      }
+    },
+    include: {
+      eventSeats: true
+    }
+  });
+
+  if (expiredBookings.length === 0) return;
+
+  //Step 2: Process each booking
+  for (const booking of expiredBookings) {
+
+    await prisma.$transaction(async (tx) => {
+
+      //Mark booking expired
+      await tx.booking.update({
+        where: { id: booking.id },
+        data: {
+          status: "EXPIRED"
+        }
+      });
+
+      //Release seats
+      await tx.eventSeat.updateMany({
+        where: {
+          bookingId: booking.id
+        },
+        data: {
+          status: "AVAILABLE",
+          lockedAt: null,
+          lockedById: null,
+          bookingId: null
+        }
+      });
+
+    });
+
+  }
+
 };
