@@ -3,6 +3,7 @@ import {
   createEventService,
   getAllEventsService,
   getEventByIdService,
+  getEventSeatsService,
   updateEventService,
   deleteEventService
 } from "../services/event.service";
@@ -113,4 +114,16 @@ export const deleteEventController = async (req: Request, res: Response) => {
 
   }
 
+};
+
+export const getEventSeatsController = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const seats = await getEventSeatsService(id);
+    res.json(seats);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch event seats"
+    });
+  }
 };

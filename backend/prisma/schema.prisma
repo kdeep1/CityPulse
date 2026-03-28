@@ -102,6 +102,8 @@ model Seat {
 model EventSeat {
   id         String     @id @default(uuid())
   eventId    Int
+  seatType   SeatType?
+  seatNumber Int?
   seatId     String
   bookingId  String?
   status     SeatStatus @default(AVAILABLE)

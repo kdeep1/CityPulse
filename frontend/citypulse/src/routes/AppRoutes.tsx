@@ -4,15 +4,18 @@ import Register from '../pages/auth/Register.tsx';
 import Home from '../pages/events/Home.tsx';
 import EventDetails from '../pages/events/EventDetails.tsx';
 import { useAuth } from '../context/AuthContext.tsx';
+import Layout from '../components/layout/Layout.tsx';
+import SeatSelection from "../pages/booking/SeatSelection";
 export default function AppRoutes() {
     const { user } = useAuth();
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Layout><Home /></Layout>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/event-details" element={<EventDetails />} />
+                <Route path="/events/:id" element={<Layout><EventDetails /></Layout>} />
+                <Route path="/booking/:eventId" element={<Layout><SeatSelection /></Layout>}/>
             </Routes>
         </BrowserRouter>
     );

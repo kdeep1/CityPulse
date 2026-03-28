@@ -4,7 +4,8 @@ import {
   getAllEventsController,
   getEventByIdController,
   updateEventController,
-  deleteEventController
+  deleteEventController,
+  getEventSeatsController
 } from "../controllers/event.controller";
 
 import { authMiddleware } from "../middlewares/auth.middleware";
@@ -17,6 +18,8 @@ const router = Router();
 router.get("/events", getAllEventsController);
 
 router.get("/events/:id", getEventByIdController);
+
+router.get("/events/:id/seats", getEventSeatsController);
 
 
 router.post(

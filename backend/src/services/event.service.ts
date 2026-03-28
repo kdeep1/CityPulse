@@ -65,3 +65,13 @@ export const deleteEventService = async (id: number) => {
     where: { id },
   });
 };
+
+export const getEventSeatsService = async (id: number) => {
+  const event = await prisma.events.findUnique({
+    where: { id },
+    select: {
+      eventSeats: true,
+    },
+  });
+  return event?.eventSeats || [];
+};
