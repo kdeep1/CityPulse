@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import {prisma} from "../lib/prisma";
 // add review
 export const addReview = async(userId : number, eventId : number, rating : number, comment : string) => {
     // Check if user attended the event

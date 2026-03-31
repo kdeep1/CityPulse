@@ -55,6 +55,7 @@ export default function Payment() {
 
   const confirmPayment = async (paymentData: any) => {
     try {
+      console.log("RAZORPAY KEY:", import.meta.env.VITE_RAZORPAY_KEY_ID);
       const res = await api.post("/booking/payments/confirm", {
         bookingId,
         paymentId: paymentData.razorpay_payment_id,

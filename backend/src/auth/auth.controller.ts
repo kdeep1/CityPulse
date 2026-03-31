@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { loginUser } from "./auth.service";
 import { refreshTokens } from "./auth.service";
-import prisma from "../lib/prisma";
+import {prisma} from "../lib/prisma";
 
 export const loginController = async (req: Request, res: Response, next: import("express").NextFunction) => {
   try {

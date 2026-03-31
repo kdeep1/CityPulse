@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import {prisma}from "../lib/prisma";
 import { expireBookingsService } from "./booking.service";
 
 const TX_TIMEOUT = { timeout: 30000 }; // 30s for Neon serverless

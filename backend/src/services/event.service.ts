@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import {prisma} from "../lib/prisma";
 import { createEventSeats } from "./eventSeat.service";
 
 export const createEventService = async (data: any, organizerId: number) => {
@@ -74,4 +74,4 @@ export const getEventSeatsService = async (id: number) => {
     },
   });
   return event?.eventSeats || [];
-};
+};

@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import {prisma} from "../lib/prisma";
 import { razorpayInstance } from "../lib/razorpay";
 import { verifyRazorpaySignature } from "../utils/verify";
 import { generateQRCode } from "../utils/qrCode";

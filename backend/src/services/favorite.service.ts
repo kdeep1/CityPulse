@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import {prisma} from "../lib/prisma";
 //add favorite
 export const addFavorite = async(userId : number, eventId : number) => {
     // Check if already favorited

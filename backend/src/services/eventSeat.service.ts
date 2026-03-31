@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import {prisma} from "../lib/prisma";
 import { SeatStatus } from "../generated/prisma/client";
 
 export const createEventSeats = async (eventId: number, venueId: number) => {
