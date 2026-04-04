@@ -14,7 +14,7 @@ import cors from "cors";
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["http://localhost:5173", "http://localhost:5174", "https://city-pulse-k9a2.vercel.app"],
     credentials: true,
   })
 );
