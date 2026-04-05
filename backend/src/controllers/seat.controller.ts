@@ -10,14 +10,18 @@ export const createVenueSeatsController = async (
   try {
 
     const venueId = Number(req.params.venueId);
-
     const { vip, regular, balcony } = req.body;
 
-    const result = await createVenueSeats(
-      venueId,
-      SeatType.VIP||SeatType.REGULAR||SeatType.BALCONY,
-        vip || regular || balcony
-    );
+    const seatConfigs = [];
+    if (vip) seatConfigs.push({ type: SeatType.VIP, count: Number(vip) });
+    if (regular) seatConfigs.push({ type: SeatType.REGULAR, count: Number(regular) });
+    if (balcony) seatConfigs.push({ type: SeatType.BALCONY, count: Number(balcony) });
+
+    if (seatConfigs.length === 0) {
+      return res.status(400).json({ message: "No seat counts provided" });
+    }
+
+    const result = await createVenueSeats(venueId, seatConfigs);
 
     res.json({
       message: "Seats created successfully",
